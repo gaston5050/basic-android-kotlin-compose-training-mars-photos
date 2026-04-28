@@ -21,8 +21,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.marsphotos.MarsPhotosApplication
 import com.example.marsphotos.data.MarsPhotoRepository
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+
 import com.example.marsphotos.data.NetworkMarsPhotosRepository
 
 import com.example.marsphotos.network.MarsPhoto
@@ -78,7 +82,7 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotoRepository) : Vie
         val Factory: ViewModelProvider.Factory = viewModelFactory{
             initializer {
                 val application = (this[APPLICATION_KEY] as MarsPhotosApplication)
-                val marsPhotosRepository = application.container.marsPhotosRepository
+                val marsPhotosRepository = application.container.marsPhotoRespository
                 MarsViewModel(marsPhotosRepository = marsPhotosRepository)
             }
         }
