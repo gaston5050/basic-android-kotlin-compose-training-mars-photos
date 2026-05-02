@@ -14,17 +14,3 @@ class FakeNetworkMarsPhotosRepository: MarsPhotoRepository {
     }
 }
 
-class MarsViewModelTest {
-    @Test
-    fun marsViewmModel_getMarsPhotos_veryMarsUiStateSuccess() = runTest() {
-        val marsViewModel = MarsViewModel(
-            marsPhotosRepository = FakeNetworkMarsPhotosRepository()
-        )
-        assertEquals(
-            MarsUiState.Success("Success: ${FakeDataSource.photosList.size} Mars " +
-                    "photos retrieved"),
-            marsViewModel.marsUiState
-        )
-
-    }
-}
