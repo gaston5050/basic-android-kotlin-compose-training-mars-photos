@@ -62,10 +62,11 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotoRepository) : Vie
         viewModelScope.launch {
             try {
 
-                val listResult = marsPhotosRepository.getMarsPhotos()
+              //  val listResult = marsPhotosRepository.getMarsPhotos()
+                val result = marsPhotosRepository.getMarsPhotos()[0]
 
-
-                marsUiState = MarsUiState.Success(" el listado tiene ${listResult.size} registros")//"Success: ${listResult.size} Mars photos retrieved")
+            //    marsUiState =
+                    MarsUiState.Success(" URl de la primer imagen: ${result.imgSrc}")//"Success: ${listResult.size} Mars photos retrieved")
             }
             catch (e: IOException) {
                 e.printStackTrace()
