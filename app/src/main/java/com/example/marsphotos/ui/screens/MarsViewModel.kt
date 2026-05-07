@@ -37,7 +37,7 @@ import java.io.IOException
 
 
 sealed interface MarsUiState {
-    data class Success(val photos: MarsPhoto) : MarsUiState
+    data class Success(val photos: List<MarsPhoto>): MarsUiState//(val photos: MarsPhoto) : MarsUiState
 
     object Error : MarsUiState
     object Loading : MarsUiState

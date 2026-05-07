@@ -24,6 +24,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,6 +41,8 @@ import coil.request.ImageRequest
 import com.example.marsphotos.R
 import com.example.marsphotos.network.MarsPhoto
 import com.example.marsphotos.ui.theme.MarsPhotosTheme
+import androidx.compose.foundation.lazy.grid.items
+
 
 @Composable
 fun HomeScreen(
@@ -48,7 +52,7 @@ fun HomeScreen(
 ) {
     when (marsUiState) {
         is MarsUiState.Loading -> LoadingScreen(modifier.padding(top = contentPadding.calculateTopPadding()))
-        is MarsUiState.Success -> MarsPhotoCard(photo = marsUiState.photos, modifier = modifier.fillMaxSize())//ResultScreen(marsUiState.photos, modifier.padding(top = contentPadding.calculateTopPadding()))
+        is MarsUiState.Success -> PhotoGridScreen(marsUiState.photos, modifier)// MarsPhotoCard(photo = marsUiState.photos, modifier = modifier.fillMaxSize())//ResultScreen(marsUiState.photos, modifier.padding(top = contentPadding.calculateTopPadding()))
         is MarsUiState.Error -> ErrorScreen(modifier.padding(top = contentPadding.calculateTopPadding()))
 
     }
@@ -121,6 +125,18 @@ fun MarsPhotoCard(photo: MarsPhoto, modifier: Modifier = Modifier) {
     )
 }
 
+@Composable
+fun PhtosGridScreen(photos: List<MarsPhoto>, modifier: Modifier = Modifier, contentPadding: PaddingValues = PaddingValues(0.dp)) {
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(150.dp),
+        modifier = modifier,
+        contentPadding = contentPadding
+    ) {
+            items(items = photos, key = {photo-> photo.id}){
+                    photo -> MarsPhotoCard(photo)
+            }
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
