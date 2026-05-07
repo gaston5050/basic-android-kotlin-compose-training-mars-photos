@@ -15,6 +15,7 @@
  */
 package com.example.marsphotos.ui.screens
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -26,6 +27,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.marsphotos.MarsPhotosApplication
 import com.example.marsphotos.data.MarsPhotoRepository
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import coil.compose.AsyncImage
 
 import com.example.marsphotos.data.NetworkMarsPhotosRepository
 
@@ -35,7 +37,7 @@ import java.io.IOException
 
 
 sealed interface MarsUiState {
-    data class Success(val photos: String) : MarsUiState
+    data class Success(val photos: MarsPhoto) : MarsUiState
 
     object Error : MarsUiState
     object Loading : MarsUiState
@@ -60,24 +62,27 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotoRepository) : Vie
     fun getMarsPhotos() {
        // marsUiState = "Set the Mars API status response here!"
         viewModelScope.launch {
-            try {
+            marsUiState = try {
 
               //  val listResult = marsPhotosRepository.getMarsPhotos()
                 val result = marsPhotosRepository.getMarsPhotos()[0]
-
-            //    marsUiState =
-                    MarsUiState.Success(" URl de la primer imagen: ${result.imgSrc}")//"Success: ${listResult.size} Mars photos retrieved")
+                //    marsUiState =
+                      MarsUiState.Success(marsPhotosRepository.getMarsPhotos()[0])//"Success: ${listResult.size} Mars photos retrieved")
             }
             catch (e: IOException) {
                 e.printStackTrace()
-                marsUiState =  MarsUiState.Error
+              //  marsUiState =
+
+                    MarsUiState.Error
             }
             catch (e: Exception) { // Te sugiero agregar este por si falla la serialización
                 println("DEBUG_ERROR: ${e.message}")
-                marsUiState = MarsUiState.Error
+                //marsUiState =
+                    MarsUiState.Error
             }
         }
         }
+
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory{
