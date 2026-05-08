@@ -43,6 +43,7 @@ import com.example.marsphotos.R
 import com.example.marsphotos.network.MarsPhoto
 import com.example.marsphotos.ui.theme.MarsPhotosTheme
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 
@@ -50,13 +51,14 @@ import androidx.compose.material3.CardDefaults
 @Composable
 fun HomeScreen(
     marsUiState: MarsUiState,
+    retryAction: () -> Unit,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
     when (marsUiState) {
         is MarsUiState.Loading -> LoadingScreen(modifier.padding(top = contentPadding.calculateTopPadding()))
         is MarsUiState.Success -> PhotosGridScreen(marsUiState.photos, modifier)// MarsPhotoCard(photo = marsUiState.photos, modifier = modifier.fillMaxSize())//ResultScreen(marsUiState.photos, modifier.padding(top = contentPadding.calculateTopPadding()))
-        is MarsUiState.Error -> ErrorScreen(modifier.padding(top = contentPadding.calculateTopPadding()))
+        is MarsUiState.Error -> ErrorScreen( modifier = Modifier.fillMaxSize(), retryAction)// ErrorScreen(modifier.padding(top = contentPadding.calculateTopPadding()))
 
     }
    // ResultScreen(marsUiState, modifier.padding(top = contentPadding.calculateTopPadding()))
@@ -72,7 +74,8 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ErrorScreen(modifier: Modifier = Modifier) {
+fun ErrorScreen(modifier: Modifier = Modifier,
+                retryAction: () -> Unit) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
@@ -82,7 +85,7 @@ fun ErrorScreen(modifier: Modifier = Modifier) {
             painter = painterResource(id = R.drawable.ic_connection_error), contentDescription = ""
         )
         Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
-        Button(onClick = retryAction) {
+        Button(onClick = {}){//retryAction) {
             Text(stringResource(R.string.retry))
         }
     }
@@ -155,5 +158,5 @@ fun PhotosGridScreen(photos: List<MarsPhoto>, modifier: Modifier = Modifier, con
 @Composable
 fun ErrorScreenPreview() {
     MarsPhotosTheme {
-        ErrorScreen()
+        //ErrorScreen({})
     }   }
