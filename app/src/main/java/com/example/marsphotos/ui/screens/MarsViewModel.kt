@@ -67,7 +67,7 @@ class MarsViewModel(private val marsPhotosRepository: MarsPhotoRepository) : Vie
               //  val listResult = marsPhotosRepository.getMarsPhotos()
                 val result = marsPhotosRepository.getMarsPhotos()[0]
                 //    marsUiState =
-                      MarsUiState.Success(marsPhotosRepository.getMarsPhotos()[0])//"Success: ${listResult.size} Mars photos retrieved")
+                      MarsUiState.Success(marsPhotosRepository.getMarsPhotos())//marsPhotosRepository.getMarsPhotos()[0])//"Success: ${listResult.size} Mars photos retrieved")
             }
             catch (e: IOException) {
                 e.printStackTrace()
